@@ -4,7 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-//hi
+
 public class MarkdownParse {
     public static ArrayList<String> getLinks(String markdown) {
         ArrayList<String> toReturn = new ArrayList<>();
@@ -16,7 +16,7 @@ public class MarkdownParse {
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
             int openParen = markdown.indexOf("(", nextCloseBracket);
             int closeParen = markdown.indexOf(")", openParen);
-            /*if(closeParen == -1)
+            if(closeParen == -1)
             {
                 return toReturn;
             }
@@ -24,7 +24,7 @@ public class MarkdownParse {
             {
                 currentIndex = closeParen + 1;
                 continue;
-            }*/
+            }
             toReturn.add(markdown.substring(openParen + 1, closeParen));
             currentIndex = closeParen + 1;
             //System.out.println(nextOpenBracket);
