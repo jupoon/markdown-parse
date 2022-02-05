@@ -31,7 +31,15 @@ public class MarkdownParse {
                 currentIndex = markdown.indexOf("\n",openParen)+1;
                 continue;
             }
-            
+            //fix parenthesis/brackets within link bug
+            if(closeParen+1 != markdown.length()) {
+                // looks for newline while making sure that
+                // closing parenthesis index is not right before markdown length
+                while(closeParen+1 < markdown.length() && markdown.indexOf("\n",closeParen) != closeParen+2) { 
+                    //updates closeParen if new line is not right after closing parenthesis
+                    closeParen = markdown.indexOf(")", closeParen+1); 
+                }
+            }
             toReturn.add(markdown.substring(openParen + 1, closeParen));
             currentIndex = closeParen + 1;
             //System.out.println(nextOpenBracket);
@@ -39,7 +47,7 @@ public class MarkdownParse {
         return toReturn;
     }
     public static void main(String[] args) throws IOException {
-		Path fileName = Path.of("test-file-missing-paren.md");
+		Path fileName = Path.of("test-file-infinite.md");
 	    String contents = Files.readString(fileName);
         ArrayList<String> links = getLinks(contents);
         System.out.println(links);
