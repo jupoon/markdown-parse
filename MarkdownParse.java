@@ -16,6 +16,7 @@ public class MarkdownParse {
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
             int openParen = markdown.indexOf("(", nextCloseBracket);
             int closeParen = markdown.indexOf(")", openParen);
+            //fix image bug
             if(closeParen == -1)
             {
                 return toReturn;
@@ -25,6 +26,12 @@ public class MarkdownParse {
                 currentIndex = closeParen + 1;
                 continue;
             }
+            // fix missing paren bug
+            if(closeParen > markdown.indexOf("\n",openParen) && markdown.indexOf("\n", openParen) != -1) {
+                currentIndex = markdown.indexOf("\n",openParen)+1;
+                continue;
+            }
+            
             toReturn.add(markdown.substring(openParen + 1, closeParen));
             currentIndex = closeParen + 1;
             //System.out.println(nextOpenBracket);
@@ -32,7 +39,7 @@ public class MarkdownParse {
         return toReturn;
     }
     public static void main(String[] args) throws IOException {
-		Path fileName = Path.of("test-file.md");
+		Path fileName = Path.of("test-file-missing-paren.md");
 	    String contents = Files.readString(fileName);
         ArrayList<String> links = getLinks(contents);
         System.out.println(links);
