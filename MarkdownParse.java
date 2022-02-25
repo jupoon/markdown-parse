@@ -35,14 +35,15 @@ public class MarkdownParse {
             if(closeParen+1 != markdown.length()) {
                 // looks for newline while making sure that
                 // closing parenthesis index is not right before markdown length
-                while(closeParen+1 < markdown.length() && markdown.indexOf("\n",closeParen) != closeParen+2) { 
+                while(closeParen+1 < markdown.length() && markdown.indexOf("\n",closeParen) != closeParen+1) { 
                     //updates closeParen if new line is not right after closing parenthesis
                     closeParen = markdown.indexOf(")", closeParen+1); 
                 }
             }
+            System.out.println(nextOpenBracket);
             toReturn.add(markdown.substring(openParen + 1, closeParen));
             currentIndex = closeParen + 1;
-            //System.out.println(nextOpenBracket);
+            
         }
         return toReturn;
     }
