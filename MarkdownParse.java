@@ -1,4 +1,5 @@
 // File reading code from https://howtodoinjava.com/java/io/java-read-file-to-string-examples/
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -40,7 +41,7 @@ public class MarkdownParse {
                     closeParen = markdown.indexOf(")", closeParen+1); 
                 }
             }
-            System.out.println(nextOpenBracket);
+            //System.out.println(nextOpenBracket);
             toReturn.add(markdown.substring(openParen + 1, closeParen));
             currentIndex = closeParen + 1;
             
@@ -48,9 +49,11 @@ public class MarkdownParse {
         return toReturn;
     }
     public static void main(String[] args) throws IOException {
-		Path fileName = Path.of("test-file-infinite.md");
-	    String contents = Files.readString(fileName);
+        File fileOrDir = new File(args[0]);
+        Path fileName = Path.of(args[0]);
+        String contents = Files.readString(fileName);
         ArrayList<String> links = getLinks(contents);
         System.out.println(links);
+
     }
 }
