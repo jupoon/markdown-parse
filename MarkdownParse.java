@@ -29,19 +29,22 @@ public class MarkdownParse {
             }
             // fix missing paren bug
             if(closeParen > markdown.indexOf("\n",openParen) && markdown.indexOf("\n", openParen) != -1) {
-                currentIndex = markdown.indexOf("\n",openParen)+1;
+                currentIndex = markdown.indexOf("\n",openParen + 1);
                 continue;
             }
             //fix parenthesis/brackets within link bug
             if(closeParen+1 != markdown.length()) {
                 // looks for newline while making sure that
                 // closing parenthesis index is not right before markdown length
-                while(closeParen+1 < markdown.length() && markdown.indexOf("\n",closeParen) != closeParen+1) { 
+                while(closeParen+1 < markdown.length() && markdown.indexOf("\n",closeParen) != closeParen + 1) { 
+                    if(markdown.indexOf("\n",closeParen) != -1 && markdown.indexOf("\n",closeParen) < markdown.indexOf("[", closeParen))
+                    {
+                        break;
+                    }
                     //updates closeParen if new line is not right after closing parenthesis
-                    closeParen = markdown.indexOf(")", closeParen+1); 
+                    closeParen = markdown.indexOf(")", closeParen+1);                     
                 }
             }
-            //System.out.println(nextOpenBracket);
             toReturn.add(markdown.substring(openParen + 1, closeParen));
             currentIndex = closeParen + 1;
             
